@@ -16,7 +16,7 @@ var Letter = function(character) {
 	// A function that returns the underlying character if the letter has been guessed, 
 	//or a placeholder (like an underscore) if the letter has not been guessed
 	this.showCharacter = function() {
-		if (letterGuessed) {
+		if (this.letterGuessed) {
 			return this.character;
 		}
 		else {
@@ -28,5 +28,8 @@ var Letter = function(character) {
 
 	}
 }
+
+var letter1 = new Letter ("a");
+letter1.showCharacter();
 
 module.exports = Letter
