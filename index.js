@@ -31,7 +31,7 @@ var guessesRemaining = 10;
 //Creating a variable to hold the letter that the user enters at the inquirer prompt.
 var userGuess = "";
 //Creating a variable to hold letters that user already guessed.
-var lettersAlreadyGuessedArray = [];
+var lettersAlreadyGuessedList = "";
 //Holds all letter objects
 var newRoundLetter = [];
 randomWord = wordList[Math.floor(Math.random() * wordList.length)];
@@ -118,6 +118,10 @@ function guessLetter(){
   }
 ]).then(function(guess) {
 	console.log("You guessed: " + guess.letter);
+	//Add letter to list of already guessed letters.
+	lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter);
+	//Show letters already guessed to user.
+	console.log("Letters already guessed: " + lettersAlreadyGuessedList);
 	//We need to loop through all of the letters in the word, 
 	//and determine if the letter that the user guessed matches one of the letters in the word.
 	for (i=0; i < someWord.letters.length; i++) {
@@ -133,6 +137,7 @@ function guessLetter(){
 	//If user guessed correctly...
 	if (userGuessedCorrectly) {
 		console.log(correct('CORRECT!'));
+		checkIfUserWon();
 	}
 
 	//Else if user guessed incorrectly...
@@ -141,7 +146,23 @@ function guessLetter(){
 		//Decrease number of guesses remaining by 1.
 		guessesRemaining--;
 		console.log("You have " + guessesRemaining + " guesses left.");
+		checkIfUserWon();
 	}
 });
 
 }
+
+//This function will check if the user won or lost after user guesses a letter.
+function checkIfUserWon() {
+	//If number of guesses remaining is 0, end game.
+	if (guessesRemaining === 0) {
+		console.log(incorrect('YOU LOST. BETTER LUCK NEXT TIME.'));
+	}
+
+	else {
+		//If user did not win or lose after a guess, keep running inquirer.
+		guessLetter();
+	}
+
+}
+
