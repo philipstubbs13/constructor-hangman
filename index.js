@@ -11,12 +11,18 @@ var figlet = require('figlet');
 var wordList = ["Burnsville", "Duluth", "Brainerd", "Minneapolis", "Lakeville"];
 //Choose random word from wordList.
 var randomWord = "";
+var someWord = "";
 //Counters for wins, losses, and guesses remaining.
 var wins = 0;
 var losses = 0;
 var guessesRemaining = 10;
+//Creating a variable to hold the letter that the user enters at the inquirer prompt.
+var userGuess = "";
+//Creating a variable to hold letters that user already guessed.
+var lettersAlreadyGuessedArray = [];
+//Holds all letter objects
+var CreateLetter = [];
 
-var someWord = new Word (randomWord);
 
 //When user enters "node index.js", convert "Hangman Game" text characters to drawings using figlet package.
 figlet("Hangman Game", function(err, data) {
@@ -57,13 +63,13 @@ function confirmStart() {
 
 	inquirer.prompt(readyToStartGame).then(answers => {
 		if (answers.readyToPlay){
-			console.log("Great! Let's begin...");
-			chooseRandomWord();
+			console.log(clc.cyanBright("Great! Let's begin..."));
+			startGame();
 			//guessLetter();
 		}
 
 		else {
-			console.log("Good bye!");
+			console.log(clc.cyanBright("Good bye!"));
 			return;
 		}
 	});
@@ -75,6 +81,10 @@ function startGame(){
 	someWord.underscores= [];
 	//lettersNotInWordList = [ ];
 	//lettersNotInWord = [""];
+	//Pick random word from word list.
+	chooseRandomWord();
+	//Start inquirer. Prompt user to guess a letter.
+	guessLetter();
 }
 
 function chooseRandomWord() {
@@ -82,30 +92,19 @@ function chooseRandomWord() {
 //Let's also change all the letters to upper case cause I'm cool like that.
 randomWord = wordList[Math.floor(Math.random() * wordList.length)];
 console.log(randomWord.toUpperCase());
-
+var someWord = new Word (randomWord);
 //I think we need to use the Word constructor here... Not entirely sure though. Just kind of guessing at this point.
 someWord.splitWord();
-
-//Determine number of underscores needed based on length of this.letters array in the Word constructor.
-// numberUnderscoresNeeded = someWord.letters.length;
-// console.log("Underscores: " + numberUnderscoresNeeded);
-
-// //Create for loop that pushes the underscores to the this.underscores array in Word constructor.
-// 	for (var i=0; i < numberUnderscoresNeeded; i++ ) {
-// 		someWord.underscores.push("_ ");
-// 	}
-// 	console.log(someWord.underscores);
-// 	//Use the 
 }
 
 function guessLetter(){
 	inquirer.prompt([
   {
     name: "letter",
-    message: "Guess a letter"
+    message: "Guess a letter:"
   }
-]).then(function(answers) {
-	console.log(answers.letter);
+]).then(function(guess) {
+	console.log("You guessed: " + guess.letter);
 });
 
 }

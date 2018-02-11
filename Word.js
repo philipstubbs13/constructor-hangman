@@ -34,11 +34,21 @@ var Word = function(myWord) {
 		//Use the .join method to join each underscore that we pushed to the this.underscores array by a space.
 		console.log(this.underscores.join(" "));
 	}
+	this.generateLetters = function() {
+		for (i=0; i < this.letters.length; i++){
+			this.letters[i] = new Letter (this.letters[i]);
+			//this.letters[i].letterGuessedCorrectly = true;
+			console.log(this.letters[i]);
+			this.letters[i].showCharacter();
+		}
+	}
 }
 
 //test word constructor. Test successful.
-// var someWord = new Word ("Burnsville");
-// someWord.splitWord();
+var someWord = new Word ("Burnsville");
+someWord.splitWord();
+someWord.generateLetters();
 
 //Export the Word constructor so that we can use/reference it in index.js.
 module.exports = Word;
+
