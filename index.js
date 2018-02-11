@@ -22,8 +22,8 @@ var userGuessedCorrectly = false;
 //Our word bank - predefined list of words to choose from. Theme is Minnesota cities.
 var wordList = ["burnsville", "duluth", "brainerd", "minneapolis", "lakeville"];
 //Choose random word from wordList.
-var randomWord = "";
-var someWord = "";
+var randomWord;
+var someWord;
 //Counters for wins, losses, and guesses remaining.
 var wins = 0;
 var losses = 0;
@@ -38,9 +38,9 @@ var lettersAlreadyGuessedListArray = [];
 var numberOfCorrectGuesses = 0;
 //Holds all letter objects
 var newRoundLetter = [];
-randomWord = wordList[Math.floor(Math.random() * wordList.length)];
-var someWord = new Word (randomWord);
 
+randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+someWord = new Word (randomWord);
 
 //When user enters "node index.js", convert "Hangman Game" text characters to drawings using figlet package.
 figlet("Hangman Game", function(err, data) {
@@ -96,7 +96,6 @@ function confirmStart() {
 function startGame(){
 	//Reset
 	guessesRemaining = 10;
-	someWord.underscores= [];
 	//lettersNotInWordList = [ ];
 	//lettersNotInWord = [""];
 	//Pick random word from word list.
@@ -107,6 +106,8 @@ function startGame(){
 
 function chooseRandomWord() {
 //Randomly generate word from wordList array.
+randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+someWord = new Word (randomWord);
 //Let's also change all the letters to lower case cause I'm cool like that.
 console.log(randomWord.toLowerCase());
 //I think we need to use the Word constructor here... Not entirely sure though. Just kind of guessing at this point.
@@ -187,6 +188,8 @@ function checkIfUserWon() {
 		losses++;
 		console.log(clc.cyanBright("Wins: " + wins));
 		console.log(clc.cyanBright("Losses: " + losses));
+		//Ask user if they want to play again. Call playAgain function.
+		playAgain();
 	}
 
 	//else if the number of correct guesses equals the number of letters in the word, the user won.
@@ -196,6 +199,7 @@ function checkIfUserWon() {
 		wins++;
 		console.log(clc.cyanBright("Wins: " + wins));
 		console.log(clc.cyanBright("Losses: " + losses));
+		//Ask user if they want to play again. Call playAgain function.
 	}
 
 	else {
@@ -203,5 +207,31 @@ function checkIfUserWon() {
 		guessLetter("");
 	}
 
+}
+
+//Create a function that will ask user if they want to play again at the end of the game.
+function playAgain() {
+	var playGameAgain = [
+	 {
+	    type: 'confirm',
+	    name: 'playAgain',
+	    message: 'Do you want to play again?',
+	    default: true
+	  }
+	];
+
+	inquirer.prompt(playGameAgain).then(userWantsTo => {
+		if (userWantsTo.playAgain){
+			//Empty out the array that contains the letters already guessed.
+			lettersAlreadyGuessedList = "";
+			lettersAlreadyGuessedListArray = [];
+			startGame();
+		}
+
+		else {
+			console.log(clc.cyanBright("Good bye!"));
+			return;
+		}
+	});
 }
 
