@@ -122,6 +122,17 @@ function guessLetter(){
   }
 ]).then(function(guess) {
 	console.log("You guessed: " + guess.letter);
+	//Assume correct guess to be false at this point.
+	userGuessedCorrectly = false;
+	//Need to find out if letter was already guessed by the user. If already guessed by the user, notify the user to enter another letter.
+	//User shouldn't be able to continue with game if they guess the same letter more than once.
+	if (lettersAlreadyGuessedListArray.indexOf(guess.letter) > -1) {
+		//If user already guessed a letter, run inquirer again to prompt them to enter a different letter.
+		console.log("You already guessed that letter. Enter another one.");
+		guessLetter();
+	}
+
+	else {
 	//Add letter to list of already guessed letters.
 	lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter);
 	lettersAlreadyGuessedListArray.push(guess.letter);
@@ -138,6 +149,7 @@ function guessLetter(){
 			//Set userGuessedCorrectly to true.
 			userGuessedCorrectly = true;
 		}
+
 	}
 
 	//If user guessed correctly...
@@ -157,6 +169,7 @@ function guessLetter(){
 		console.log("You have " + guessesRemaining + " guesses left.");
 		checkIfUserWon();
 	}
+}
 });
 }
 
