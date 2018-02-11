@@ -48,6 +48,10 @@ var numberOfCorrectGuesses = 0;
 //Holds all letter objects
 var newRoundLetter = [];
 
+//Possible values the user can choose on the keyboard.
+var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i" , "j" , "k" ,  "l" , "m" , "n" , "o" , "p" , "q" , "r" , "s" , "t" , "u", "v", "w", "x", "y", "z"];
+
+
 randomWord = wordList[Math.floor(Math.random() * wordList.length)];
 someWord = new Word (randomWord);
 
@@ -136,6 +140,10 @@ function guessLetter(){
 ]).then(function(guess) {
 	//Convert all letters guessed by the user to lower case.
 	guess.letter.toLowerCase();
+	if (alphabet.indexOf(guess.letter) === -1) {
+		console.log("Dude, that's not a single letter. Enter one letter and try again.");
+		guessLetter();
+	}
 	console.log("You guessed: " + guess.letter);
 	//Assume correct guess to be false at this point.
 	userGuessedCorrectly = false;
@@ -184,7 +192,7 @@ function guessLetter(){
 	}
 
 	//Else if user guessed incorrectly...
-	else {
+	else if (userGuessedCorrectly === false && alphabet.indexOf(guess.letter) >= 0) {
 		console.log(incorrect('INCORRECT!'));
 		//Decrease number of guesses remaining by 1.
 		guessesRemaining--;
