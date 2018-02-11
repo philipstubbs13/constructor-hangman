@@ -151,6 +151,9 @@ function guessLetter(){
 			someWord.letters[i].letterGuessedCorrectly === true;
 			//Set userGuessedCorrectly to true.
 			userGuessedCorrectly = true;
+			someWord.underscores[i] = guess.letter;
+			console.log(someWord.underscores);
+			}
 		}
 
 	}
@@ -172,7 +175,7 @@ function guessLetter(){
 		console.log("You have " + guessesRemaining + " guesses left.");
 		checkIfUserWon();
 	}
-}
+
 });
 }
 
