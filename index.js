@@ -16,11 +16,13 @@ var incorrect = clc.red.bold;
 //Pre-defined styling for correct guess.
 var correct = clc.green.bold;
 
+process.setMaxListeners(0);
+
 //When user guesses correctly, set this variable to true for that letter. The default value will be false.
 var userGuessedCorrectly = false;
 
 //Our word bank - predefined list of words to choose from. Theme is Minnesota cities.
-var wordList = ["burnsville", "duluth", "brainerd", "minneapolis", "lakeville"];
+var wordList = ["burnsville", "duluth", "brainerd", "minneapolis", "lakeville", "blaine", "eagan", "minnetonka", "bloomington", "mankato", "edina", "bemidji", "shakopee", "chanhassen", "owatonna"];
 //Choose random word from wordList.
 var randomWord;
 var someWord;
@@ -54,13 +56,13 @@ figlet("Hangman Game", function(err, data) {
     }
     console.log(data)
     console.log(clc.cyanBright("Welcome to the Hangman Game (Minnesota Edition)!"));
-    console.log(clc.cyanBright("Theme is... Minnesota cities"));
+    console.log(clc.cyanBright("Theme is... Minnesota cities."));
     var howToPlay = 
     "==========================================================================================================" + "\r\n" +
     "How to play" + "\r\n" +
     "==========================================================================================================" + "\r\n" +
     "When prompted to enter a letter, press any letter (a-z) on the keyboard to guess a letter." + "\r\n" +
-    "Keep guessing letters. When you guess a letter, your choie is either correct or incorrect." + "\r\n" +
+    "Keep guessing letters. When you guess a letter, your choice is either correct or incorrect." + "\r\n" +
     "If incorrect, the letter you guessed does not appear in the word." + "\r\n" + 
     "For every incorrect guess, the number of guesses remaining decrease by 1." + "\r\n" +
     "If correct, the letter you guessed appears in the word." + "\r\n" +
