@@ -20,7 +20,7 @@ var correct = clc.green.bold;
 var userGuessedCorrectly = false;
 
 //Our word bank - predefined list of words to choose from. Theme is Minnesota cities.
-var wordList = ["Burnsville", "Duluth", "Brainerd", "Minneapolis", "Lakeville"];
+var wordList = ["burnsville", "duluth", "brainerd", "minneapolis", "lakeville"];
 //Choose random word from wordList.
 var randomWord = "";
 var someWord = "";
@@ -107,8 +107,8 @@ function startGame(){
 
 function chooseRandomWord() {
 //Randomly generate word from wordList array.
-//Let's also change all the letters to upper case cause I'm cool like that.
-console.log(randomWord.toUpperCase());
+//Let's also change all the letters to lower case cause I'm cool like that.
+console.log(randomWord.toLowerCase());
 //I think we need to use the Word constructor here... Not entirely sure though. Just kind of guessing at this point.
 someWord.splitWord();
 someWord.generateLetters();
@@ -121,6 +121,8 @@ function guessLetter(){
     message: "Guess a letter:"
   }
 ]).then(function(guess) {
+	//Convert all letters guessed by the user to lower case.
+	guess.letter.toLowerCase();
 	console.log("You guessed: " + guess.letter);
 	//Assume correct guess to be false at this point.
 	userGuessedCorrectly = false;
