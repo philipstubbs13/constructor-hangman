@@ -32,6 +32,10 @@ var guessesRemaining = 10;
 var userGuess = "";
 //Creating a variable to hold letters that user already guessed.
 var lettersAlreadyGuessedList = "";
+var lettersAlreadyGuessedListArray = [];
+
+//Creating a variable to determine number of correct gueses by user, which will help determine when the user wins.
+var numberOfCorrectGuesses = 0;
 //Holds all letter objects
 var newRoundLetter = [];
 randomWord = wordList[Math.floor(Math.random() * wordList.length)];
@@ -120,8 +124,10 @@ function guessLetter(){
 	console.log("You guessed: " + guess.letter);
 	//Add letter to list of already guessed letters.
 	lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter);
+	lettersAlreadyGuessedListArray.push(guess.letter);
 	//Show letters already guessed to user.
 	console.log("Letters already guessed: " + lettersAlreadyGuessedList);
+
 	//We need to loop through all of the letters in the word, 
 	//and determine if the letter that the user guessed matches one of the letters in the word.
 	for (i=0; i < someWord.letters.length; i++) {
@@ -137,6 +143,9 @@ function guessLetter(){
 	//If user guessed correctly...
 	if (userGuessedCorrectly) {
 		console.log(correct('CORRECT!'));
+		//Add to the number of correct guesses.
+		numberOfCorrectGuesses++;
+		console.log("Number of correct guesses: " + numberOfCorrectGuesses);
 		checkIfUserWon();
 	}
 
@@ -149,19 +158,26 @@ function guessLetter(){
 		checkIfUserWon();
 	}
 });
-
 }
+
+
 
 //This function will check if the user won or lost after user guesses a letter.
 function checkIfUserWon() {
 	//If number of guesses remaining is 0, end game.
 	if (guessesRemaining === 0) {
 		console.log(incorrect('YOU LOST. BETTER LUCK NEXT TIME.'));
+		console.log(clc.cyanBright("The correct word was: " + randomWord));
+	}
+
+	//else if the number of correct guesses equals the number of letters in the word, the user won.
+	else if (numberOfCorrectGuesses === someWord.letters.length) {
+		console.log(correct('YOU WON!!!!!'));
 	}
 
 	else {
 		//If user did not win or lose after a guess, keep running inquirer.
-		guessLetter();
+		guessLetter("");
 	}
 
 }
