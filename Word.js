@@ -11,6 +11,8 @@
 //Word depends on the Letter constructor. So, we need to require Letter so that we can use it in the Word.js file (this file).
 var Letter = require("./Letter");
 
+var newRoundLetter = [];
+
 var Word = function(myWord) {
 	//Take chosen word from word list.
 	this.myWord = myWord;
@@ -38,16 +40,16 @@ var Word = function(myWord) {
 		for (i=0; i < this.letters.length; i++){
 			this.letters[i] = new Letter (this.letters[i]);
 			//this.letters[i].letterGuessedCorrectly = true;
-			console.log(this.letters[i]);
+			//console.log(this.letters[i]);
 			this.letters[i].showCharacter();
 		}
 	}
 }
 
 //test word constructor. Test successful.
-var someWord = new Word ("Burnsville");
-someWord.splitWord();
-someWord.generateLetters();
+// var someWord = new Word ("Burnsville");
+// someWord.splitWord();
+// someWord.generateLetters();
 
 //Export the Word constructor so that we can use/reference it in index.js.
 module.exports = Word;

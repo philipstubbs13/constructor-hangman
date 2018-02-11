@@ -7,6 +7,18 @@ var clc = require('cli-color');
 //Game requires figlet npm package to convert text to drawing.
 var figlet = require('figlet');
 
+//Let's require the Letter constructor.
+var Letter = require("./Letter.js");
+
+//Pre-defined styling for incorrect guess.
+var incorrect = clc.red.bold;
+
+//Pre-defined styling for correct guess.
+var correct = clc.green.bold;
+
+//When user guesses correctly, set this variable to true for that letter. The default value will be false.
+var userGuessedCorrectly = false;
+
 //Our word bank - predefined list of words to choose from. Theme is Minnesota cities.
 var wordList = ["Burnsville", "Duluth", "Brainerd", "Minneapolis", "Lakeville"];
 //Choose random word from wordList.
@@ -21,7 +33,9 @@ var userGuess = "";
 //Creating a variable to hold letters that user already guessed.
 var lettersAlreadyGuessedArray = [];
 //Holds all letter objects
-var CreateLetter = [];
+var newRoundLetter = [];
+randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+var someWord = new Word (randomWord);
 
 
 //When user enters "node index.js", convert "Hangman Game" text characters to drawings using figlet package.
@@ -90,11 +104,10 @@ function startGame(){
 function chooseRandomWord() {
 //Randomly generate word from wordList array.
 //Let's also change all the letters to upper case cause I'm cool like that.
-randomWord = wordList[Math.floor(Math.random() * wordList.length)];
 console.log(randomWord.toUpperCase());
-var someWord = new Word (randomWord);
 //I think we need to use the Word constructor here... Not entirely sure though. Just kind of guessing at this point.
 someWord.splitWord();
+someWord.generateLetters();
 }
 
 function guessLetter(){
@@ -105,6 +118,26 @@ function guessLetter(){
   }
 ]).then(function(guess) {
 	console.log("You guessed: " + guess.letter);
+	//We need to loop through all of the letters in the word, 
+	//and determine if the letter that the user guessed matches one of the letters in the word.
+	for (i=0; i < someWord.letters.length; i++) {
+		//If the user guess equals one of the letters/characters in the word and letterGuessedCorrectly is equal to false for that letter...
+		if (guess.letter === someWord.letters[i].character && someWord.letters[i].letterGuessedCorrectly === false) {
+			//Set letterGuessedCorrectly property for that letter equal to true.
+			someWord.letters[i].letterGuessedCorrectly === true;
+			//Set userGuessedCorrectly to true.
+			userGuessedCorrectly = true;
+		}
+	}
+
+	//If user guessed correctly...
+	if (userGuessedCorrectly) {
+		console.log(correct('CORRECT!'));
+	}
+
+	else {
+		console.log(incorrect('INCORRECT!'));
+	}
 });
 
 }
