@@ -152,10 +152,12 @@ function guessLetter(){
 			//Set userGuessedCorrectly to true.
 			userGuessedCorrectly = true;
 			someWord.underscores[i] = guess.letter;
-			console.log(someWord.underscores);
+			// someWord.underscores.join("");
+			// console.log(someWord.underscores);
 			}
 		}
-
+			someWord.splitWord();
+			someWord.generateLetters();
 	}
 
 	//If user guessed correctly...

@@ -29,9 +29,9 @@ var Word = function(myWord) {
 		numberUnderscoresNeeded = this.letters.length;
 		//console.log("Underscores: " + numberUnderscoresNeeded);
 		//Create for loop that pushes the underscores to the this.underscores array in Word constructor.
-		for (var i=0; i < numberUnderscoresNeeded; i++ ) {
-			this.underscores.push("_ ");
-		}
+		// for (var i=0; i < numberUnderscoresNeeded; i++ ) {
+		// 	this.underscores.push("_ ");
+		// }
 		//console.log(this.underscores);
 		//Use the .join method to join each underscore that we pushed to the this.underscores array by a space.
 		console.log(this.underscores.join(" "));
