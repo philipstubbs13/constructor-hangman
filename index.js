@@ -52,8 +52,12 @@ function confirmStart() {
 
 function chooseRandomWord() {
 //Randomly generate word from wordList array.
+//Let's also change all the letters to upper case cause I'm cool like that.
 randomWord = wordList[Math.floor(Math.random() * wordList.length)];
-console.log(randomWord);	
+console.log(randomWord.toUpperCase());
+
+//I think we need to use the Word constructor here... Not entirely sure though. Just kind of guessing at this point.
+var newWord = new Word (randomWord);	
 }
 
 function guessLetter(){
