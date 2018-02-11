@@ -34,8 +34,8 @@ var userGuess = "";
 var lettersAlreadyGuessedList = "";
 var lettersAlreadyGuessedListArray = [];
 
-//Number of underscores/slots remaining
-var slotsRemaining = 0;
+//Number of underscores/slots filled in with a letter.
+var slotsFilledIn = 0;
 
 //Creating a variable to determine number of correct gueses by user, which will help determine when the user wins.
 var numberOfCorrectGuesses = 0;
@@ -157,8 +157,8 @@ function guessLetter(){
 			someWord.underscores[i] = guess.letter;
 			// someWord.underscores.join("");
 			// console.log(someWord.underscores);
-			slotsRemaining++
-			console.log("Number of slots remaining " + slotsRemaining);
+			slotsFilledIn++
+			console.log("Number of slots remaining " + slotsFilledIn);
 			}
 		}
 			someWord.splitWord();
@@ -201,14 +201,16 @@ function checkIfUserWon() {
 		playAgain();
 	}
 
-	//else if the number of correct guesses equals the number of letters in the word, the user won.
-	else if (slotsRemaining === someWord.letters.length) {
+	//else if the number of slots/underscores that are filled in with a letter equals the number of letters in the word, the user won.
+	else if (slotsFilledIn === someWord.letters.length) {
 		console.log(correct('YOU WON!!!!!'));
 		//Increment win counter by 1.
 		wins++;
+		//Show total wins and losses.
 		console.log(clc.cyanBright("Wins: " + wins));
 		console.log(clc.cyanBright("Losses: " + losses));
 		//Ask user if they want to play again. Call playAgain function.
+		playAgain();
 	}
 
 	else {
@@ -234,6 +236,8 @@ function playAgain() {
 			//Empty out the array that contains the letters already guessed.
 			lettersAlreadyGuessedList = "";
 			lettersAlreadyGuessedListArray = [];
+			//Set number of slots filled in with letters back to zero.
+			slotsFilledIn = 0;
 			startGame();
 		}
 
