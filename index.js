@@ -135,8 +135,12 @@ function guessLetter(){
 		console.log(correct('CORRECT!'));
 	}
 
+	//Else if user guessed incorrectly...
 	else {
 		console.log(incorrect('INCORRECT!'));
+		//Decrease number of guesses remaining by 1.
+		guessesRemaining--;
+		console.log("You have " + guessesRemaining + " guesses left.");
 	}
 });
 
