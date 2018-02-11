@@ -183,11 +183,19 @@ function checkIfUserWon() {
 	if (guessesRemaining === 0) {
 		console.log(incorrect('YOU LOST. BETTER LUCK NEXT TIME.'));
 		console.log(clc.cyanBright("The correct word was: " + randomWord));
+		//Increment loss counter by 1.
+		losses++;
+		console.log(clc.cyanBright("Wins: " + wins));
+		console.log(clc.cyanBright("Losses: " + losses));
 	}
 
 	//else if the number of correct guesses equals the number of letters in the word, the user won.
 	else if (numberOfCorrectGuesses === someWord.letters.length) {
 		console.log(correct('YOU WON!!!!!'));
+		//Increment win counter by 1.
+		wins++;
+		console.log(clc.cyanBright("Wins: " + wins));
+		console.log(clc.cyanBright("Losses: " + losses));
 	}
 
 	else {
