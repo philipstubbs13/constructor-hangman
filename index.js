@@ -34,6 +34,9 @@ var userGuess = "";
 var lettersAlreadyGuessedList = "";
 var lettersAlreadyGuessedListArray = [];
 
+//Number of underscores/slots remaining
+var slotsRemaining = 0;
+
 //Creating a variable to determine number of correct gueses by user, which will help determine when the user wins.
 var numberOfCorrectGuesses = 0;
 //Holds all letter objects
@@ -154,6 +157,8 @@ function guessLetter(){
 			someWord.underscores[i] = guess.letter;
 			// someWord.underscores.join("");
 			// console.log(someWord.underscores);
+			slotsRemaining++
+			console.log("Number of slots remaining " + slotsRemaining);
 			}
 		}
 			someWord.splitWord();
@@ -165,7 +170,6 @@ function guessLetter(){
 		console.log(correct('CORRECT!'));
 		//Add to the number of correct guesses.
 		numberOfCorrectGuesses++;
-		console.log("Number of correct guesses: " + numberOfCorrectGuesses);
 		checkIfUserWon();
 	}
 
@@ -198,7 +202,7 @@ function checkIfUserWon() {
 	}
 
 	//else if the number of correct guesses equals the number of letters in the word, the user won.
-	else if (numberOfCorrectGuesses === someWord.letters.length) {
+	else if (slotsRemaining === someWord.letters.length) {
 		console.log(correct('YOU WON!!!!!'));
 		//Increment win counter by 1.
 		wins++;
