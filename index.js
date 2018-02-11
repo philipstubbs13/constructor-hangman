@@ -1,22 +1,25 @@
 //This file requires the Word.js file
 var Word = require("./Word.js");
+
 //Game requires inquirer npm package to prompt user.
 var inquirer = require("inquirer");
-//Game requires cli-color npm package for styling of game.
+
+//Game requires cli-color npm package to give the game some color.
 var clc = require('cli-color');
+
 //Game requires figlet npm package to convert text to drawing.
 var figlet = require('figlet');
 
 //Let's require the Letter constructor.
 var Letter = require("./Letter.js");
 
-//Pre-defined styling for incorrect guess.
+//Pre-defined color for incorrect guess.
 var incorrect = clc.red.bold;
 
-//Pre-defined styling for correct guess.
+//Pre-defined color for correct guess.
 var correct = clc.green.bold;
 
-process.setMaxListeners(0);
+//https://stackoverflow.com/questions/9768444/possible-eventemitter-memory-leak-detected
 
 //When user guesses correctly, set this variable to true for that letter. The default value will be false.
 var userGuessedCorrectly = false;
@@ -41,6 +44,7 @@ var slotsFilledIn = 0;
 
 //Creating a variable to determine number of correct gueses by user, which will help determine when the user wins.
 var numberOfCorrectGuesses = 0;
+
 //Holds all letter objects
 var newRoundLetter = [];
 
@@ -55,6 +59,7 @@ figlet("Hangman Game", function(err, data) {
         return;
     }
     console.log(data)
+    //Welcome screen
     console.log(clc.cyanBright("Welcome to the Hangman Game (Minnesota Edition)!"));
     console.log(clc.cyanBright("Theme is... Minnesota cities."));
     var howToPlay = 
@@ -73,7 +78,7 @@ figlet("Hangman Game", function(err, data) {
     confirmStart();
 });
 
-//Use Inquirer package to display ready to start game confirmation.
+//Use Inquirer package to display game confirmation prompt to user.
 function confirmStart() {
 	var readyToStartGame = [
 	 {
@@ -85,41 +90,43 @@ function confirmStart() {
 	];
 
 	inquirer.prompt(readyToStartGame).then(answers => {
+		//If the user confirms that they want to play, start game.
 		if (answers.readyToPlay){
 			console.log(clc.cyanBright("Great! Let's begin..."));
 			startGame();
-			//guessLetter();
 		}
 
 		else {
+			//If the user decides they don't want to play, exit game.
 			console.log(clc.cyanBright("Good bye!"));
 			return;
 		}
 	});
 }
 
+//Start game function.
 function startGame(){
-	//Reset
+	//Reset/set number of guesses remaining when user starts a new game.
 	guessesRemaining = 10;
-	//lettersNotInWordList = [ ];
-	//lettersNotInWord = [""];
 	//Pick random word from word list.
 	chooseRandomWord();
 	//Start inquirer. Prompt user to guess a letter.
 	guessLetter();
 }
 
+//Function to choose a random word from the list of cities in the word bank array.
 function chooseRandomWord() {
 //Randomly generate word from wordList array.
 randomWord = wordList[Math.floor(Math.random() * wordList.length)];
 someWord = new Word (randomWord);
-//Let's also change all the letters to lower case cause I'm cool like that.
+//Let's also change all the letters to lower case.
 console.log(randomWord.toLowerCase());
-//I think we need to use the Word constructor here... Not entirely sure though. Just kind of guessing at this point.
+//Use the Word constructor in Word.js to split the word and generate letters.
 someWord.splitWord();
 someWord.generateLetters();
 }
 
+//Function that will prompt the user to enter a letter. This letter is the user's guess.
 function guessLetter(){
 	inquirer.prompt([
   {
@@ -159,8 +166,9 @@ function guessLetter(){
 			someWord.underscores[i] = guess.letter;
 			// someWord.underscores.join("");
 			// console.log(someWord.underscores);
+			//Increment the number of slots/underscores filled in with letters by 1.
 			slotsFilledIn++
-			console.log("Number of slots remaining " + slotsFilledIn);
+			//console.log("Number of slots remaining " + slotsFilledIn);
 			}
 		}
 			someWord.splitWord();
@@ -186,8 +194,6 @@ function guessLetter(){
 
 });
 }
-
-
 
 //This function will check if the user won or lost after user guesses a letter.
 function checkIfUserWon() {
@@ -244,6 +250,7 @@ function playAgain() {
 		}
 
 		else {
+			//If user doesn't want to play again, exit game.
 			console.log(clc.cyanBright("Good bye!"));
 			return;
 		}
