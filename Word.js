@@ -11,6 +11,7 @@
 //Word depends on the Letter constructor. So, need to require Letter.
 var Letter = require("./Letter");
 
-var Word = function() {
-	
+var Word = function(myWord) {
+	this.myWord = myWord;
+	this.letters = [];
 }
