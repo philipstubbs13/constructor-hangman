@@ -39,7 +39,8 @@ function confirmStart() {
 	inquirer.prompt(readyToStartGame).then(answers => {
 		if (answers.readyToPlay){
 			console.log("Great! Let's begin...");
-			guessLetter();
+			chooseRandomWord();
+			//guessLetter();
 		}
 
 		else {
@@ -57,7 +58,19 @@ randomWord = wordList[Math.floor(Math.random() * wordList.length)];
 console.log(randomWord.toUpperCase());
 
 //I think we need to use the Word constructor here... Not entirely sure though. Just kind of guessing at this point.
-var newWord = new Word (randomWord);	
+var someWord = new Word (randomWord);
+someWord.splitWord();
+
+//Determine number of underscores needed based on length of this.letters array in the Word constructor.
+// numberUnderscoresNeeded = someWord.letters.length;
+// console.log("Underscores: " + numberUnderscoresNeeded);
+
+// //Create for loop that pushes the underscores to the this.underscores array in Word constructor.
+// 	for (var i=0; i < numberUnderscoresNeeded; i++ ) {
+// 		someWord.underscores.push("_ ");
+// 	}
+// 	console.log(someWord.underscores);
+// 	//Use the 
 }
 
 function guessLetter(){
