@@ -11,6 +11,12 @@ var figlet = require('figlet');
 var wordList = ["Burnsville", "Duluth", "Brainerd", "Minneapolis", "Lakeville"];
 //Choose random word from wordList.
 var randomWord = "";
+//Counters for wins, losses, and guesses remaining.
+var wins = 0;
+var losses = 0;
+var guessesRemaining = 10;
+
+var someWord = new Word (randomWord);
 
 //When user enters "node index.js", convert "Hangman Game" text characters to drawings using figlet package.
 figlet("Hangman Game", function(err, data) {
@@ -20,8 +26,21 @@ figlet("Hangman Game", function(err, data) {
         return;
     }
     console.log(data)
-    console.log(clc.blueBright("Welcome to the Hangman Game!"));
-    console.log(clc.blueBright("Theme: Minnesota cities"));
+    console.log(clc.cyanBright("Welcome to the Hangman Game (Minnesota Edition)!"));
+    console.log(clc.cyanBright("Theme is... Minnesota cities"));
+    var howToPlay = 
+    "==========================================================================================================" + "\r\n" +
+    "How to play" + "\r\n" +
+    "==========================================================================================================" + "\r\n" +
+    "When prompted to enter a letter, press any letter (a-z) on the keyboard to guess a letter." + "\r\n" +
+    "Keep guessing letters. When you guess a letter, your choie is either correct or incorrect." + "\r\n" +
+    "If incorrect, the letter you guessed does not appear in the word." + "\r\n" + 
+    "For every incorrect guess, the number of guesses remaining decrease by 1." + "\r\n" +
+    "If correct, the letter you guessed appears in the word." + "\r\n" +
+    "If you correctly guess all the letters in the word before the number of guesses remaining reaches 0, you win." + "\r\n" +
+    "If you run out of guesses before the entire word is revealed, you lose. Game over." + "\r\n" +
+    "===========================================================================================================" + "\r\n" 
+    console.log(clc.cyanBright(howToPlay));
     confirmStart();
 });
 
@@ -50,6 +69,13 @@ function confirmStart() {
 	});
 }
 
+function startGame(){
+	//Reset
+	guessesRemaining = 10;
+	someWord.underscores= [];
+	//lettersNotInWordList = [ ];
+	//lettersNotInWord = [""];
+}
 
 function chooseRandomWord() {
 //Randomly generate word from wordList array.
@@ -58,7 +84,6 @@ randomWord = wordList[Math.floor(Math.random() * wordList.length)];
 console.log(randomWord.toUpperCase());
 
 //I think we need to use the Word constructor here... Not entirely sure though. Just kind of guessing at this point.
-var someWord = new Word (randomWord);
 someWord.splitWord();
 
 //Determine number of underscores needed based on length of this.letters array in the Word constructor.
