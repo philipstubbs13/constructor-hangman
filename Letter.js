@@ -17,12 +17,10 @@ var Letter = function(character) {
 	//or a placeholder (like an underscore) if the letter has not been guessed
 	this.showCharacter = function() {
 		if (this.letterGuessedCorrectly) {
-			return this.character;
 			console.log(this.character);
 		}
 		else {
-			return "_";
-			//console.log ("_");
+			return ("_");
 		}
 
 	}

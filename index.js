@@ -1,3 +1,12 @@
+//https://stackoverflow.com/questions/9768444/possible-eventemitter-memory-leak-detected
+//set the maxListener
+//require('events').EventEmitter.prototype._maxListeners = 100;
+//const emitter = new EventEmitter();
+//emitter.setMaxListeners(100);
+// or 0 to turn off the limit
+//emitter.setMaxListeners(0)
+require('events').EventEmitter.prototype._maxListeners = 0;
+
 //This file requires the Word.js file
 var Word = require("./Word.js");
 
@@ -22,9 +31,8 @@ var incorrect = clc.red.bold;
 //Pre-defined color for correct guess.
 var correct = clc.green.bold;
 
-//https://stackoverflow.com/questions/9768444/possible-eventemitter-memory-leak-detected
-//set the maxListener
-require('events').EventEmitter.prototype._maxListeners = 100;
+//pre-defined color for game text.
+var gameTextColor = clc.cyanBright;
 
 //When user guesses correctly, set this variable to true for that letter. The default value will be false.
 var userGuessedCorrectly = false;
@@ -65,8 +73,8 @@ figlet("Hangman Game", function(err, data) {
     }
     console.log(data)
     //Welcome screen
-    console.log(clc.cyanBright("Welcome to the Hangman Game (Minnesota Edition)!"));
-    console.log(clc.cyanBright("Theme is... Minnesota cities."));
+    console.log(gameTextColor("Welcome to the Hangman Game (Minnesota Edition)!"));
+    console.log(gameTextColor("Theme is... Minnesota cities."));
     var howToPlay = 
     "==========================================================================================================" + "\r\n" +
     "How to play" + "\r\n" +
@@ -79,7 +87,7 @@ figlet("Hangman Game", function(err, data) {
     "If you correctly guess all the letters in the word before the number of guesses remaining reaches 0, you win." + "\r\n" +
     "If you run out of guesses before the entire word is revealed, you lose. Game over." + "\r\n" +
     "===========================================================================================================" + "\r\n" 
-    console.log(clc.cyanBright(howToPlay));
+    console.log(gameTextColor(howToPlay));
     confirmStart();
 });
 
@@ -97,13 +105,13 @@ function confirmStart() {
 	inquirer.prompt(readyToStartGame).then(answers => {
 		//If the user confirms that they want to play, start game.
 		if (answers.readyToPlay){
-			console.log(clc.cyanBright("Great! Let's begin..."));
+			console.log(gameTextColor("Great! Let's begin..."));
 			startGame();
 		}
 
 		else {
 			//If the user decides they don't want to play, exit game.
-			console.log(clc.cyanBright("Good bye!"));
+			console.log(gameTextColor("Good bye!"));
 			return;
 		}
 	});
@@ -125,7 +133,7 @@ function chooseRandomWord() {
 randomWord = wordList[Math.floor(Math.random() * wordList.length)];
 someWord = new Word (randomWord);
 //Let's also change all the letters to lower case.
-console.log(randomWord.toLowerCase());
+//console.log(randomWord.toLowerCase());
 //Use the Word constructor in Word.js to split the word and generate letters.
 someWord.splitWord();
 someWord.generateLetters();
@@ -150,14 +158,14 @@ function guessLetter(){
 ]).then(function(guess) {
 	//Convert all letters guessed by the user to lower case.
 	guess.letter.toLowerCase();
-	console.log("You guessed: " + guess.letter);
+	console.log(gameTextColor("You guessed: " + guess.letter));
 	//Assume correct guess to be false at this point.
 	userGuessedCorrectly = false;
 	//Need to find out if letter was already guessed by the user. If already guessed by the user, notify the user to enter another letter.
 	//User shouldn't be able to continue with game if they guess the same letter more than once.
 	if (lettersAlreadyGuessedListArray.indexOf(guess.letter) > -1) {
 		//If user already guessed a letter, run inquirer again to prompt them to enter a different letter.
-		console.log("You already guessed that letter. Enter another one.");
+		console.log(gameTextColor("You already guessed that letter. Enter another one."));
 		guessLetter();
 	}
 
@@ -166,7 +174,7 @@ function guessLetter(){
 	lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter);
 	lettersAlreadyGuessedListArray.push(guess.letter);
 	//Show letters already guessed to user.
-	console.log("Letters already guessed: " + lettersAlreadyGuessedList);
+	console.log(gameTextColor("Letters already guessed: " + lettersAlreadyGuessedList));
 
 	//We need to loop through all of the letters in the word, 
 	//and determine if the letter that the user guessed matches one of the letters in the word.
@@ -202,7 +210,7 @@ function guessLetter(){
 		console.log(incorrect('INCORRECT!'));
 		//Decrease number of guesses remaining by 1.
 		guessesRemaining--;
-		console.log("You have " + guessesRemaining + " guesses left.");
+		console.log(gameTextColor("You have " + guessesRemaining + " guesses left."));
 		checkIfUserWon();
 	}
 
@@ -214,11 +222,11 @@ function checkIfUserWon() {
 	//If number of guesses remaining is 0, end game.
 	if (guessesRemaining === 0) {
 		console.log(incorrect('YOU LOST. BETTER LUCK NEXT TIME.'));
-		console.log(clc.cyanBright("The correct word was: " + randomWord));
+		console.log(gameTextColor("The correct word was: " + randomWord));
 		//Increment loss counter by 1.
 		losses++;
-		console.log(clc.cyanBright("Wins: " + wins));
-		console.log(clc.cyanBright("Losses: " + losses));
+		console.log(gameTextColor("Wins: " + wins));
+		console.log(gameTextColor("Losses: " + losses));
 		//Ask user if they want to play again. Call playAgain function.
 		playAgain();
 	}
@@ -229,8 +237,8 @@ function checkIfUserWon() {
 		//Increment win counter by 1.
 		wins++;
 		//Show total wins and losses.
-		console.log(clc.cyanBright("Wins: " + wins));
-		console.log(clc.cyanBright("Losses: " + losses));
+		console.log(gameTextColor("Wins: " + wins));
+		console.log(gameTextColor("Losses: " + losses));
 		//Ask user if they want to play again. Call playAgain function.
 		playAgain();
 	}
@@ -265,7 +273,7 @@ function playAgain() {
 
 		else {
 			//If user doesn't want to play again, exit game.
-			console.log(clc.cyanBright("Good bye!"));
+			console.log(gameTextColor("Good bye!"));
 			return;
 		}
 	});
