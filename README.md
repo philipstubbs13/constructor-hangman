@@ -1,6 +1,7 @@
 # constructor-hangman
 
 ## Table of contents
+  * [Demo](#demo)
   * [About this project](#about-this-project)
   * [Getting started](#contribute)
     * [Clone the repository](#clone-repository)
@@ -11,6 +12,9 @@
   * [Technologies used to create app](#technologies-used)
   * [Future code development](#feature-enhancements)
   * [Issues](#issues)
+
+## <a name="demo"></a> Demo
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O1bcFL9CiwM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## <a name="about-this-project"></a> About this project
 <p>This project is a command line version of the classic Hangman game. This game was created using Javascript constructor functions.</p>
