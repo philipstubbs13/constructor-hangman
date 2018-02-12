@@ -10,7 +10,7 @@
 
 var Letter = function(character) {
 	// A string value to store the underlying character for the letter
-	this.character = character;
+	this.character = character.toUpperCase();
 	// A boolean value that stores whether that letter has been guessed yet
 	this.letterGuessedCorrectly = false;
 	// A function that returns the underlying character if the letter has been guessed, 
@@ -22,9 +22,6 @@ var Letter = function(character) {
 		else {
 			return ("_");
 		}
-
-	}
-	this.checkValue = function() {
 
 	}
 }

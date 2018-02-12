@@ -24,7 +24,7 @@ var Word = function(myWord) {
 	//After we get a random word from the word list, I think I need to use the split method to add the letters to the this.letters array.
 	this.splitWord = function() {
 		this.letters = this.myWord.split("");
-		console.log(this.letters);
+		//console.log(this.letters);
 		//Determine number of underscores needed based on length of this.letters array in the Word constructor.
 		numberUnderscoresNeeded = this.letters.length;
 		//console.log("Underscores: " + numberUnderscoresNeeded);

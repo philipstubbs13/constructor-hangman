@@ -1,12 +1,3 @@
-//https://stackoverflow.com/questions/9768444/possible-eventemitter-memory-leak-detected
-//set the maxListener
-//require('events').EventEmitter.prototype._maxListeners = 100;
-//const emitter = new EventEmitter();
-//emitter.setMaxListeners(100);
-// or 0 to turn off the limit
-//emitter.setMaxListeners(0)
-require('events').EventEmitter.prototype._maxListeners = 0;
-
 //This file requires the Word.js file
 var Word = require("./Word.js");
 
@@ -109,6 +100,7 @@ function confirmStart() {
 		//If the user confirms that they want to play, start game.
 		if (answers.readyToPlay){
 			console.log(gameTextColor("Great! Let's begin..."));
+			console.log(gameTextColor("WORD TO GUESS:"));
 			startGame();
 		}
 
@@ -135,10 +127,8 @@ function startGame(){
 //Function to choose a random word from the list of cities in the word bank array.
 function chooseRandomWord() {
 //Randomly generate word from wordList array.
-randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+randomWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
 someWord = new Word (randomWord);
-//Let's also change all the letters to lower case.
-//console.log(randomWord.toLowerCase());
 //Use the Word constructor in Word.js to split the word and generate letters.
 someWord.splitWord();
 someWord.generateLetters();
@@ -165,22 +155,22 @@ function guessLetter(){
   }
 ]).then(function(guess) {
 	//Convert all letters guessed by the user to lower case.
-	guess.letter.toLowerCase();
-	console.log(gameTextColor("You guessed: " + guess.letter.toLowerCase()));
+	guess.letter.toUpperCase();
+	console.log(gameTextColor("You guessed: " + guess.letter.toUpperCase()));
 	//Assume correct guess to be false at this point.
 	userGuessedCorrectly = false;
 	//Need to find out if letter was already guessed by the user. If already guessed by the user, notify the user to enter another letter.
 	//User shouldn't be able to continue with game if they guess the same letter more than once.
-	if (lettersAlreadyGuessedListArray.indexOf(guess.letter.toLowerCase()) > -1) {
+	if (lettersAlreadyGuessedListArray.indexOf(guess.letter.toUpperCase()) > -1) {
 		//If user already guessed a letter, run inquirer again to prompt them to enter a different letter.
 		console.log(gameTextColor("You already guessed that letter. Enter another one."));
 		guessLetter();
 	}
 
-	else if (lettersAlreadyGuessedListArray.indexOf(guess.letter.toLowerCase()) === -1) {
+	else if (lettersAlreadyGuessedListArray.indexOf(guess.letter.toUpperCase()) === -1) {
 		//Add letter to list of already guessed letters.
-		lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter.toLowerCase());
-		lettersAlreadyGuessedListArray.push(guess.letter.toLowerCase());
+		lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter.toUpperCase());
+		lettersAlreadyGuessedListArray.push(guess.letter.toUpperCase());
 		//Show letters already guessed to user.
 		console.log(gameTextColor("====================================================================="));
 		console.log(boxen(gameTextColor('Letters already guessed: ') + lettersAlreadyGuessedList, {padding: 1}));
@@ -190,12 +180,12 @@ function guessLetter(){
 		//and determine if the letter that the user guessed matches one of the letters in the word.
 		for (i=0; i < someWord.letters.length; i++) {
 			//If the user guess equals one of the letters/characters in the word and letterGuessedCorrectly is equal to false for that letter...
-			if (guess.letter.toLowerCase() === someWord.letters[i].character && someWord.letters[i].letterGuessedCorrectly === false) {
+			if (guess.letter.toUpperCase() === someWord.letters[i].character && someWord.letters[i].letterGuessedCorrectly === false) {
 				//Set letterGuessedCorrectly property for that letter equal to true.
 				someWord.letters[i].letterGuessedCorrectly === true;
 				//Set userGuessedCorrectly to true.
 				userGuessedCorrectly = true;
-				someWord.underscores[i] = guess.letter.toLowerCase();
+				someWord.underscores[i] = guess.letter.toUpperCase();
 				// someWord.underscores.join("");
 				// console.log(someWord.underscores);
 				//Increment the number of slots/underscores filled in with letters by 1.
@@ -203,6 +193,7 @@ function guessLetter(){
 				//console.log("Number of slots remaining " + slotsFilledIn);
 			}
 		}
+		console.log(gameTextColor("WORD TO GUESS:"));
 		someWord.splitWord();
 		someWord.generateLetters();
 
@@ -248,7 +239,7 @@ function checkIfUserWon() {
 	//else if the number of slots/underscores that are filled in with a letter equals the number of letters in the word, the user won.
 	else if (slotsFilledIn === someWord.letters.length) {
 		console.log(gameTextColor("====================================================================="));
-		console.log(correct('YOU WON!!!!!'));
+		console.log(correct("YOU WON! YOU'RE A TRUE MINNESOTAN!"));
 		//Increment win counter by 1.
 		wins++;
 		//Show total wins and losses.
