@@ -10,6 +10,9 @@ var clc = require('cli-color');
 //Game requires figlet npm package to convert text to drawing.
 var figlet = require('figlet');
 
+//npm package used to determine if the value the user enters is actually a letter or not (basically, this is form validation).
+var isLetter = require('is-letter');
+
 //Let's require the Letter constructor.
 var Letter = require("./Letter.js");
 
@@ -20,6 +23,8 @@ var incorrect = clc.red.bold;
 var correct = clc.green.bold;
 
 //https://stackoverflow.com/questions/9768444/possible-eventemitter-memory-leak-detected
+//set the maxListener
+require('events').EventEmitter.prototype._maxListeners = 100;
 
 //When user guesses correctly, set this variable to true for that letter. The default value will be false.
 var userGuessedCorrectly = false;
@@ -47,10 +52,6 @@ var numberOfCorrectGuesses = 0;
 
 //Holds all letter objects
 var newRoundLetter = [];
-
-//Possible values the user can choose on the keyboard.
-var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i" , "j" , "k" ,  "l" , "m" , "n" , "o" , "p" , "q" , "r" , "s" , "t" , "u", "v", "w", "x", "y", "z"];
-
 
 randomWord = wordList[Math.floor(Math.random() * wordList.length)];
 someWord = new Word (randomWord);
@@ -135,15 +136,20 @@ function guessLetter(){
 	inquirer.prompt([
   {
     name: "letter",
-    message: "Guess a letter:"
+    message: "Guess a letter:",
+    //Check if value is a letter (for example, "a") or not a letter ("aba") using the is-letter npm package.
+    validate: function(value) {
+        if(isLetter(value)){
+          return true;
+        } 
+        else {
+          return false;
+        }
+      }
   }
 ]).then(function(guess) {
 	//Convert all letters guessed by the user to lower case.
 	guess.letter.toLowerCase();
-	if (alphabet.indexOf(guess.letter) === -1) {
-		console.log("Dude, that's not a single letter. Enter one letter and try again.");
-		guessLetter();
-	}
 	console.log("You guessed: " + guess.letter);
 	//Assume correct guess to be false at this point.
 	userGuessedCorrectly = false;

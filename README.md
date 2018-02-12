@@ -71,6 +71,7 @@ The first step is to clone the project repository to a local directory on your c
 	<li>Inquirer npm package (https://www.npmjs.com/package/twitter) - used to prompt users for a letter throughout the game.</li>
 	<li>cli-color npm package (https://www.npmjs.com/package/cli-color) - used to add color to the game.</li>
   	<li>Figlet npm package (https://www.npmjs.com/package/figlet) - used to convert text into ASCII art - drawings made out of text characters.</li>
+  	<li>is-letter npm package (https://www.npmjs.com/package/is-letter) - used to check if the value the user enters is a letter (for example, "a") or not a letter (for example, "aba").
 </ul>
 <p>Version information for each of these packages is available in the package.json file in the project root directory.</p>
 
