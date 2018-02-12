@@ -198,7 +198,7 @@ function guessLetter(){
 	}
 
 	//Else if user guessed incorrectly...
-	else if (userGuessedCorrectly === false && alphabet.indexOf(guess.letter) >= 0 && lettersAlreadyGuessedListArray.indexOf(guess.letter) > -1) {
+	else if (userGuessedCorrectly === false && lettersAlreadyGuessedListArray.indexOf(guess.letter) > -1) {
 		console.log(incorrect('INCORRECT!'));
 		//Decrease number of guesses remaining by 1.
 		guessesRemaining--;
