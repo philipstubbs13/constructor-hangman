@@ -166,7 +166,7 @@ function guessLetter(){
 	//and determine if the letter that the user guessed matches one of the letters in the word.
 	for (i=0; i < someWord.letters.length; i++) {
 		//If the user guess equals one of the letters/characters in the word and letterGuessedCorrectly is equal to false for that letter...
-		if (guess.letter === someWord.letters[i].character && someWord.letters[i].letterGuessedCorrectly === false) {
+		if (guess.letter === someWord.letters[i].character && someWord.letters[i].letterGuessedCorrectly === false && lettersAlreadyGuessedListArray.indexOf(guess.letter) > -1) {
 			//Set letterGuessedCorrectly property for that letter equal to true.
 			someWord.letters[i].letterGuessedCorrectly === true;
 			//Set userGuessedCorrectly to true.
@@ -192,7 +192,7 @@ function guessLetter(){
 	}
 
 	//Else if user guessed incorrectly...
-	else if (userGuessedCorrectly === false && alphabet.indexOf(guess.letter) >= 0) {
+	else if (userGuessedCorrectly === false && alphabet.indexOf(guess.letter) >= 0 && lettersAlreadyGuessedListArray.indexOf(guess.letter) > -1) {
 		console.log(incorrect('INCORRECT!'));
 		//Decrease number of guesses remaining by 1.
 		guessesRemaining--;
