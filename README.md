@@ -14,7 +14,7 @@
   * [Issues](#issues)
 
 ## <a name="demo"></a> Demo
-<iframe width="560" height="315" src="https://www.youtube.com/embed/O1bcFL9CiwM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+Video demo: https://www.youtube.com/embed/O1bcFL9CiwM"
 
 ## <a name="about-this-project"></a> About this project
 <p>This project is a command line version of the classic Hangman game. This game was created using Javascript constructor functions.</p>
