@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/philipstubbs13/constructor-hangman#readme",
   "dependencies": {
+    "boxen": "^1.3.0",
     "cli-color": "^1.2.0",
     "figlet": "^1.2.0",
     "inquirer": "^5.1.0",

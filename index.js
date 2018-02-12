@@ -25,6 +25,9 @@ var isLetter = require('is-letter');
 //Let's require the Letter constructor.
 var Letter = require("./Letter.js");
 
+//Create boxes in the terminal
+const boxen = require('boxen');
+
 //Pre-defined color for incorrect guess.
 var incorrect = clc.red.bold;
 
@@ -174,7 +177,9 @@ function guessLetter(){
 	lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter);
 	lettersAlreadyGuessedListArray.push(guess.letter);
 	//Show letters already guessed to user.
-	console.log(gameTextColor("Letters already guessed: " + lettersAlreadyGuessedList));
+	console.log(gameTextColor("====================================================================="));
+	console.log(boxen(gameTextColor('Letters already guessed: ') + lettersAlreadyGuessedList, {padding: 1}));
+	console.log(gameTextColor("====================================================================="));
 
 	//We need to loop through all of the letters in the word, 
 	//and determine if the letter that the user guessed matches one of the letters in the word.
@@ -200,6 +205,7 @@ function guessLetter(){
 	//If user guessed correctly...
 	if (userGuessedCorrectly) {
 		console.log(correct('CORRECT!'));
+		console.log(gameTextColor("====================================================================="));
 		//Add to the number of correct guesses.
 		numberOfCorrectGuesses++;
 		checkIfUserWon();
@@ -211,6 +217,7 @@ function guessLetter(){
 		//Decrease number of guesses remaining by 1.
 		guessesRemaining--;
 		console.log(gameTextColor("You have " + guessesRemaining + " guesses left."));
+		console.log(gameTextColor("====================================================================="));
 		checkIfUserWon();
 	}
 
@@ -221,24 +228,28 @@ function guessLetter(){
 function checkIfUserWon() {
 	//If number of guesses remaining is 0, end game.
 	if (guessesRemaining === 0) {
+		console.log(gameTextColor("====================================================================="));
 		console.log(incorrect('YOU LOST. BETTER LUCK NEXT TIME.'));
 		console.log(gameTextColor("The correct word was: " + randomWord));
 		//Increment loss counter by 1.
 		losses++;
 		console.log(gameTextColor("Wins: " + wins));
 		console.log(gameTextColor("Losses: " + losses));
+		console.log(gameTextColor("====================================================================="));
 		//Ask user if they want to play again. Call playAgain function.
 		playAgain();
 	}
 
 	//else if the number of slots/underscores that are filled in with a letter equals the number of letters in the word, the user won.
 	else if (slotsFilledIn === someWord.letters.length) {
+		console.log(gameTextColor("====================================================================="));
 		console.log(correct('YOU WON!!!!!'));
 		//Increment win counter by 1.
 		wins++;
 		//Show total wins and losses.
 		console.log(gameTextColor("Wins: " + wins));
 		console.log(gameTextColor("Losses: " + losses));
+		console.log(gameTextColor("====================================================================="));
 		//Ask user if they want to play again. Call playAgain function.
 		playAgain();
 	}
