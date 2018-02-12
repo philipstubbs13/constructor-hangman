@@ -76,7 +76,7 @@ figlet("Hangman Game", function(err, data) {
     }
     console.log(data)
     //Welcome screen
-    console.log(gameTextColor("Welcome to the Hangman Game (Minnesota Edition)!"));
+    console.log(gameTextColor("Welcome to the Hangman Game!"));
     console.log(gameTextColor("Theme is... Minnesota cities."));
     var howToPlay = 
     "==========================================================================================================" + "\r\n" +
@@ -128,6 +128,8 @@ function startGame(){
 	chooseRandomWord();
 	//Start inquirer. Prompt user to guess a letter.
 	guessLetter();
+	lettersAlreadyGuessedList = "";
+	lettersAlreadyGuessedListArray = [];
 }
 
 //Function to choose a random word from the list of cities in the word bank array.
@@ -144,6 +146,9 @@ someWord.generateLetters();
 
 //Function that will prompt the user to enter a letter. This letter is the user's guess.
 function guessLetter(){
+	//Keep prompting user to enter a letter if there are slots/underscores that still need to be filled in
+	//OR if there are still guesses remaining.
+	if (slotsFilledIn < someWord.letters.length || guessesRemaining > 0) {
 	inquirer.prompt([
   {
     name: "letter",
@@ -172,56 +177,56 @@ function guessLetter(){
 		guessLetter();
 	}
 
-	else {
-	//Add letter to list of already guessed letters.
-	lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter);
-	lettersAlreadyGuessedListArray.push(guess.letter);
-	//Show letters already guessed to user.
-	console.log(gameTextColor("====================================================================="));
-	console.log(boxen(gameTextColor('Letters already guessed: ') + lettersAlreadyGuessedList, {padding: 1}));
-	console.log(gameTextColor("====================================================================="));
+	else if (lettersAlreadyGuessedListArray.indexOf(guess.letter) === -1) {
+		//Add letter to list of already guessed letters.
+		lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter);
+		lettersAlreadyGuessedListArray.push(guess.letter);
+		//Show letters already guessed to user.
+		console.log(gameTextColor("====================================================================="));
+		console.log(boxen(gameTextColor('Letters already guessed: ') + lettersAlreadyGuessedList, {padding: 1}));
+		console.log(gameTextColor("====================================================================="));
 
-	//We need to loop through all of the letters in the word, 
-	//and determine if the letter that the user guessed matches one of the letters in the word.
-	for (i=0; i < someWord.letters.length; i++) {
-		//If the user guess equals one of the letters/characters in the word and letterGuessedCorrectly is equal to false for that letter...
-		if (guess.letter === someWord.letters[i].character && someWord.letters[i].letterGuessedCorrectly === false && lettersAlreadyGuessedListArray.indexOf(guess.letter) > -1) {
-			//Set letterGuessedCorrectly property for that letter equal to true.
-			someWord.letters[i].letterGuessedCorrectly === true;
-			//Set userGuessedCorrectly to true.
-			userGuessedCorrectly = true;
-			someWord.underscores[i] = guess.letter;
-			// someWord.underscores.join("");
-			// console.log(someWord.underscores);
-			//Increment the number of slots/underscores filled in with letters by 1.
-			slotsFilledIn++
-			//console.log("Number of slots remaining " + slotsFilledIn);
+		//We need to loop through all of the letters in the word, 
+		//and determine if the letter that the user guessed matches one of the letters in the word.
+		for (i=0; i < someWord.letters.length; i++) {
+			//If the user guess equals one of the letters/characters in the word and letterGuessedCorrectly is equal to false for that letter...
+			if (guess.letter === someWord.letters[i].character && someWord.letters[i].letterGuessedCorrectly === false) {
+				//Set letterGuessedCorrectly property for that letter equal to true.
+				someWord.letters[i].letterGuessedCorrectly === true;
+				//Set userGuessedCorrectly to true.
+				userGuessedCorrectly = true;
+				someWord.underscores[i] = guess.letter;
+				// someWord.underscores.join("");
+				// console.log(someWord.underscores);
+				//Increment the number of slots/underscores filled in with letters by 1.
+				slotsFilledIn++
+				//console.log("Number of slots remaining " + slotsFilledIn);
 			}
 		}
-			someWord.splitWord();
-			someWord.generateLetters();
-	}
+		someWord.splitWord();
+		someWord.generateLetters();
 
-	//If user guessed correctly...
-	if (userGuessedCorrectly) {
-		console.log(correct('CORRECT!'));
-		console.log(gameTextColor("====================================================================="));
-		//Add to the number of correct guesses.
-		numberOfCorrectGuesses++;
-		checkIfUserWon();
-	}
+		//If user guessed correctly...
+		if (userGuessedCorrectly) {
+			console.log(correct('CORRECT!'));
+			console.log(gameTextColor("====================================================================="));
+			//Add to the number of correct guesses.
+			numberOfCorrectGuesses++;
+			checkIfUserWon();
+		}
 
-	//Else if user guessed incorrectly...
-	else if (userGuessedCorrectly === false && lettersAlreadyGuessedListArray.indexOf(guess.letter) > -1) {
-		console.log(incorrect('INCORRECT!'));
-		//Decrease number of guesses remaining by 1.
-		guessesRemaining--;
-		console.log(gameTextColor("You have " + guessesRemaining + " guesses left."));
-		console.log(gameTextColor("====================================================================="));
-		checkIfUserWon();
+		//Else if user guessed incorrectly...
+		else {
+			console.log(incorrect('INCORRECT!'));
+			//Decrease number of guesses remaining by 1.
+			guessesRemaining--;
+			console.log(gameTextColor("You have " + guessesRemaining + " guesses left."));
+			console.log(gameTextColor("====================================================================="));
+			checkIfUserWon();
+		}
 	}
-
 });
+}
 }
 
 //This function will check if the user won or lost after user guesses a letter.
@@ -230,7 +235,7 @@ function checkIfUserWon() {
 	if (guessesRemaining === 0) {
 		console.log(gameTextColor("====================================================================="));
 		console.log(incorrect('YOU LOST. BETTER LUCK NEXT TIME.'));
-		console.log(gameTextColor("The correct word was: " + randomWord));
+		console.log(gameTextColor("The correct city was: " + randomWord));
 		//Increment loss counter by 1.
 		losses++;
 		console.log(gameTextColor("Wins: " + wins));
