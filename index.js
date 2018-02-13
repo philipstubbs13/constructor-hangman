@@ -55,8 +55,8 @@ var numberOfCorrectGuesses = 0;
 //Holds all letter objects
 var newRoundLetter = [];
 
-randomWord = wordList[Math.floor(Math.random() * wordList.length)];
-someWord = new Word (randomWord);
+var randomWord;
+var someWord;
 
 //When user enters "node index.js", convert "Hangman Game" text characters to drawings using figlet package.
 figlet("Hangman Game", function(err, data) {
@@ -105,14 +105,12 @@ function confirmStart() {
 		//If the user confirms that they want to play, start game.
 		if (answers.readyToPlay){
 			console.log(gameTextColor("Great! Welcome, " + answers.playerName + ". Let's begin..."));
-			console.log(gameTextColor("Your word contains " + randomWord.length + " letters."));
-			console.log(gameTextColor("WORD TO GUESS:"));
 			startGame();
 		}
 
 		else {
 			//If the user decides they don't want to play, exit game.
-			console.log(gameTextColor("Good bye!"));
+			console.log(gameTextColor("Good bye, " + answers.playerName + "! Come back soon."));
 			return;
 		}
 	});
@@ -125,7 +123,6 @@ function startGame(){
 	//Pick random word from word list.
 	chooseRandomWord();
 	//Start inquirer. Prompt user to guess a letter.
-	guessLetter();
 	lettersAlreadyGuessedList = "";
 	lettersAlreadyGuessedListArray = [];
 }
@@ -135,9 +132,13 @@ function chooseRandomWord() {
 //Randomly generate word from wordList array.
 randomWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
 someWord = new Word (randomWord);
+//Tell the user how many letters are in the word.
+console.log(gameTextColor("Your word contains " + randomWord.length + " letters."));
+console.log(gameTextColor("WORD TO GUESS:"));
 //Use the Word constructor in Word.js to split the word and generate letters.
 someWord.splitWord();
 someWord.generateLetters();
+guessLetter();
 }
 
 //Function that will prompt the user to enter a letter. This letter is the user's guess.
@@ -281,12 +282,13 @@ function playAgain() {
 			lettersAlreadyGuessedListArray = [];
 			//Set number of slots filled in with letters back to zero.
 			slotsFilledIn = 0;
+			console.log(gameTextColor("Great! Welcome back. Let's begin..."));
 			startGame();
 		}
 
 		else {
 			//If user doesn't want to play again, exit game.
-			console.log(gameTextColor("Good bye!"));
+			console.log(gameTextColor("Good bye! Come back soon."));
 			return;
 		}
 	});
