@@ -132,7 +132,9 @@ function chooseRandomWord() {
 //Randomly generate word from wordList array.
 randomWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
 someWord = new Word (randomWord);
-kdjfk
+//Tell the user how many letters are in the word.
+console.log(gameTextColor("Your word contains " + randomWord.length + " letters."));
+console.log(gameTextColor("WORD TO GUESS:"));
 //Use the Word constructor in Word.js to split the word and generate letters.
 someWord.splitWord();
 someWord.generateLetters();
@@ -169,6 +171,7 @@ function guessLetter(){
 	if (lettersAlreadyGuessedListArray.indexOf(guess.letter.toUpperCase()) > -1) {
 		//If user already guessed a letter, run inquirer again to prompt them to enter a different letter.
 		console.log(gameTextColor("You already guessed that letter. Enter another one."));
+		console.log(gameTextColor("====================================================================="));
 		guessLetter();
 	}
 
@@ -177,9 +180,7 @@ function guessLetter(){
 		lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter.toUpperCase());
 		lettersAlreadyGuessedListArray.push(guess.letter.toUpperCase());
 		//Show letters already guessed to user.
-		console.log(gameTextColor("====================================================================="));
 		console.log(boxen(gameTextColor('Letters already guessed: ') + lettersAlreadyGuessedList, {padding: 1}));
-		console.log(gameTextColor("====================================================================="));
 
 		//We need to loop through all of the letters in the word, 
 		//and determine if the letter that the user guessed matches one of the letters in the word.
