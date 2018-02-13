@@ -17,7 +17,7 @@
 Video demo: https://www.youtube.com/watch?v=O1bcFL9CiwM&feature=youtu.be
 
 ## <a name="about-this-project"></a> About this project
-<p>This project is a command line version of the classic Hangman game. This game was created using Javascript constructor functions.</p>
+This project is a command line version of the classic Hangman game. This game uses similar logic to the [browser-based Hangman game](https://github.com/philipstubbs13/Hangman-Game) I created except I created the command line version using Javascript constructor functions, where each letter in the word that the user is trying to guess is its own object. For more information on how this project was constructed and put together, see [Structure of the project](#structure-of-project).
 
 ## <a name="contribute"></a> Getting started
 To play the game from your computer and/or contribute to this project, perform the following steps:

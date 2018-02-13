@@ -132,9 +132,7 @@ function chooseRandomWord() {
 //Randomly generate word from wordList array.
 randomWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
 someWord = new Word (randomWord);
-//Tell the user how many letters are in the word.
-console.log(gameTextColor("Your word contains " + randomWord.length + " letters."));
-console.log(gameTextColor("WORD TO GUESS:"));
+kdjfk
 //Use the Word constructor in Word.js to split the word and generate letters.
 someWord.splitWord();
 someWord.generateLetters();
