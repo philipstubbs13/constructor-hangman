@@ -20,7 +20,7 @@ var Letter = function(character) {
 			console.log(this.character);
 		}
 		else {
-			return ("_");
+			//console.log ("_");
 		}
 
 	}

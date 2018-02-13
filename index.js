@@ -89,6 +89,11 @@ figlet("Hangman Game", function(err, data) {
 function confirmStart() {
 	var readyToStartGame = [
 	 {
+	 	type: 'text',
+	 	name: 'playerName',
+	 	message: 'What is your name?'
+	 },
+	 {
 	    type: 'confirm',
 	    name: 'readyToPlay',
 	    message: 'Are you ready to play?',
@@ -99,7 +104,8 @@ function confirmStart() {
 	inquirer.prompt(readyToStartGame).then(answers => {
 		//If the user confirms that they want to play, start game.
 		if (answers.readyToPlay){
-			console.log(gameTextColor("Great! Let's begin..."));
+			console.log(gameTextColor("Great! Welcome, " + answers.playerName + ". Let's begin..."));
+			console.log(gameTextColor("Your word contains " + randomWord.length + " letters."));
 			console.log(gameTextColor("WORD TO GUESS:"));
 			startGame();
 		}

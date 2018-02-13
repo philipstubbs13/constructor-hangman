@@ -30,7 +30,7 @@ var Word = function(myWord) {
 		//console.log("Underscores: " + numberUnderscoresNeeded);
 		//Create for loop that pushes the underscores to the this.underscores array in Word constructor.
 		// for (var i=0; i < numberUnderscoresNeeded; i++ ) {
-		// 	this.underscores.push("_ ");
+		//this.underscores.push("_ ");
 		// }
 		//console.log(this.underscores);
 		//Use the .join method to join each underscore that we pushed to the this.underscores array by a space.
@@ -40,6 +40,7 @@ var Word = function(myWord) {
 		for (i=0; i < this.letters.length; i++){
 			this.letters[i] = new Letter (this.letters[i]);
 			//this.letters[i].letterGuessedCorrectly = true;
+			//This line of code shows the super array of letter objects for debugging purposes.
 			//console.log(this.letters[i]);
 			this.letters[i].showCharacter();
 		}
