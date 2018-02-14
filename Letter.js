@@ -26,7 +26,9 @@ var Letter = function(character) {
 	}
 }
 
+//Test to make sure Letter.js is working. Test successful.
 // var letter1 = new Letter ("a");
 // letter1.showCharacter();
 
+//export Letter constructor so that Word.js can use it.
 module.exports = Letter

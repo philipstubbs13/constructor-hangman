@@ -1,7 +1,7 @@
 //This file requires the Word.js file
 var Word = require("./Word.js");
 
-//Game requires inquirer npm package to prompt user.
+//Game requires inquirer npm package to prompt user to enter a letter.
 var inquirer = require("inquirer");
 
 //Game requires cli-color npm package to give the game some color.
@@ -10,11 +10,8 @@ var clc = require('cli-color');
 //Game requires figlet npm package to convert text to drawing.
 var figlet = require('figlet');
 
-//npm package used to determine if the value the user enters is actually a letter or not (basically, this is form validation).
+//npm package used to determine if the value the user enters is actually a letter or not (form validation).
 var isLetter = require('is-letter');
-
-//Let's require the Letter constructor.
-var Letter = require("./Letter.js");
 
 //Create boxes in the terminal
 const boxen = require('boxen');
@@ -31,34 +28,30 @@ var gameTextColor = clc.cyanBright;
 //When user guesses correctly, set this variable to true for that letter. The default value will be false.
 var userGuessedCorrectly = false;
 
-//Our word bank - predefined list of words to choose from. Theme is Minnesota cities.
+//Our word bank - predefined list of words to choose from. 
 var wordList = ["burnsville", "duluth", "brainerd", "minneapolis", "lakeville", "blaine", "eagan", "minnetonka", "bloomington", "mankato", "edina", "bemidji", "shakopee", "chanhassen", "owatonna"];
+
 //Choose random word from wordList.
 var randomWord;
 var someWord;
+
 //Counters for wins, losses, and guesses remaining.
 var wins = 0;
 var losses = 0;
 var guessesRemaining = 10;
+
 //Creating a variable to hold the letter that the user enters at the inquirer prompt.
 var userGuess = "";
+
 //Creating a variable to hold letters that user already guessed.
 var lettersAlreadyGuessedList = "";
 var lettersAlreadyGuessedListArray = [];
 
-//Number of underscores/slots filled in with a letter.
+//Number of underscores/slots that have been filled in with a letter. 
+//When game starts or is reset, this value should be 0.
 var slotsFilledIn = 0;
 
-//Creating a variable to determine number of correct gueses by user, which will help determine when the user wins.
-var numberOfCorrectGuesses = 0;
-
-//Holds all letter objects
-var newRoundLetter = [];
-
-var randomWord;
-var someWord;
-
-//When user enters "node index.js", convert "Hangman Game" text characters to drawings using figlet package.
+//When user enters game, convert "Hangman Game" text characters to drawings using figlet npm package.
 figlet("Hangman Game", function(err, data) {
     if (err) {
         console.log('Something went wrong...');
@@ -66,9 +59,10 @@ figlet("Hangman Game", function(err, data) {
         return;
     }
     console.log(data)
-    //Welcome screen
+    //Welcome screen text.
     console.log(gameTextColor("Welcome to the Hangman Game!"));
     console.log(gameTextColor("Theme is... Minnesota cities."));
+    //Game instructions.
     var howToPlay = 
     "==========================================================================================================" + "\r\n" +
     "How to play" + "\r\n" +
@@ -80,8 +74,11 @@ figlet("Hangman Game", function(err, data) {
     "If correct, the letter you guessed appears in the word." + "\r\n" +
     "If you correctly guess all the letters in the word before the number of guesses remaining reaches 0, you win." + "\r\n" +
     "If you run out of guesses before the entire word is revealed, you lose. Game over." + "\r\n" +
-    "===========================================================================================================" + "\r\n" 
+    "===========================================================================================================" + "\r\n" +
+    "You can exit the game at any time by pressing Ctrl + C on your keyboard." + "\r\n" +
+    "===========================================================================================================" 
     console.log(gameTextColor(howToPlay));
+ 	//Ask user if they are ready to play.
     confirmStart();
 });
 
@@ -118,11 +115,11 @@ function confirmStart() {
 
 //Start game function.
 function startGame(){
-	//Reset/set number of guesses remaining when user starts a new game.
+	//Reset number of guesses remainingm when user starts a new game.
 	guessesRemaining = 10;
 	//Pick random word from word list.
 	chooseRandomWord();
-	//Start inquirer. Prompt user to guess a letter.
+	//When game is reset, empty out list of already guessed letters.
 	lettersAlreadyGuessedList = "";
 	lettersAlreadyGuessedListArray = [];
 }
@@ -131,6 +128,7 @@ function startGame(){
 function chooseRandomWord() {
 //Randomly generate word from wordList array.
 randomWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
+//Set the random word chosen from the word list to someWord.
 someWord = new Word (randomWord);
 //Tell the user how many letters are in the word.
 console.log(gameTextColor("Your word contains " + randomWord.length + " letters."));
@@ -161,7 +159,7 @@ function guessLetter(){
       }
   }
 ]).then(function(guess) {
-	//Convert all letters guessed by the user to lower case.
+	//Convert all letters guessed by the user to upper case.
 	guess.letter.toUpperCase();
 	console.log(gameTextColor("You guessed: " + guess.letter.toUpperCase()));
 	//Assume correct guess to be false at this point.
@@ -175,6 +173,7 @@ function guessLetter(){
 		guessLetter();
 	}
 
+	//If user entered a letter that was not already guessed...
 	else if (lettersAlreadyGuessedListArray.indexOf(guess.letter.toUpperCase()) === -1) {
 		//Add letter to list of already guessed letters.
 		lettersAlreadyGuessedList = lettersAlreadyGuessedList.concat(" " + guess.letter.toUpperCase());
@@ -205,20 +204,22 @@ function guessLetter(){
 
 		//If user guessed correctly...
 		if (userGuessedCorrectly) {
+			//Tell user they are CORRECT (letter is in the word they are trying to guess.)
 			console.log(correct('CORRECT!'));
 			console.log(gameTextColor("====================================================================="));
-			//Add to the number of correct guesses.
-			numberOfCorrectGuesses++;
+			//After each letter guess, check if the user won or lost.
 			checkIfUserWon();
 		}
 
 		//Else if user guessed incorrectly...
 		else {
+			//Tell user they are INCORRECT (letter is not in the word).
 			console.log(incorrect('INCORRECT!'));
-			//Decrease number of guesses remaining by 1.
+			//Decrease number of guesses remaining by 1 and display number of guesses remaining.
 			guessesRemaining--;
 			console.log(gameTextColor("You have " + guessesRemaining + " guesses left."));
 			console.log(gameTextColor("====================================================================="));
+			//After each letter guess, check if the user won or lost.
 			checkIfUserWon();
 		}
 	}
@@ -235,6 +236,7 @@ function checkIfUserWon() {
 		console.log(gameTextColor("The correct city was: " + randomWord));
 		//Increment loss counter by 1.
 		losses++;
+		//Display wins and losses totals.
 		console.log(gameTextColor("Wins: " + wins));
 		console.log(gameTextColor("Losses: " + losses));
 		console.log(gameTextColor("====================================================================="));
@@ -282,6 +284,7 @@ function playAgain() {
 			//Set number of slots filled in with letters back to zero.
 			slotsFilledIn = 0;
 			console.log(gameTextColor("Great! Welcome back. Let's begin..."));
+			//start a new game.
 			startGame();
 		}
 

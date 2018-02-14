@@ -11,8 +11,6 @@
 //Word depends on the Letter constructor. So, we need to require Letter so that we can use it in the Word.js file (this file).
 var Letter = require("./Letter");
 
-var newRoundLetter = [];
-
 var Word = function(myWord) {
 	//Take chosen word from word list.
 	this.myWord = myWord;
