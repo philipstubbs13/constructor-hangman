@@ -1,4 +1,4 @@
-# constructor-hangman
+# Javascript Contstructor Hangman Game
 
 ## Table of contents
   * [Demo](#demo)
@@ -8,16 +8,16 @@
     * [Install Node.js](#install-node)
     * [Install the dependencies](#dependencies)
   * [Starting the game](#start-game)
-  * [Examples](#examples)
+  * [Playing the game](#play-game)
   * [Technologies used to create app](#technologies-used)
   * [Future code development](#feature-enhancements)
   * [Issues](#issues)
 
 ## <a name="demo"></a> Demo
-Video demo: https://www.youtube.com/watch?v=O1bcFL9CiwM&feature=youtu.be
+Video demo: https://www.youtube.com/watch?v=3F9VjnIJ6jI&feature=youtu.be
 
 ## <a name="about-this-project"></a> About this project
-This project is a command line version of the classic Hangman game. This game uses similar logic to the [browser-based Hangman game](https://github.com/philipstubbs13/Hangman-Game) I created except I created the command line version using Javascript constructor functions, where each letter in the word that the user is trying to guess is its own object. For more information on how this project was constructed and put together, see [Structure of the project](#structure-of-project).
+This project is a command line version of the classic Hangman game. This game uses similar logic to the [browser-based Hangman game](https://github.com/philipstubbs13/Hangman-Game) I created, but with this game, I created the command line version using Javascript constructor functions, where each letter in the word that the user is trying to guess is its own object. For more information on how this project was constructed and put together, see [Structure of the project](#structure-of-project).
 
 ## <a name="contribute"></a> Getting started
 To play the game from your computer and/or contribute to this project, perform the following steps:
@@ -51,7 +51,7 @@ The first step is to clone the project repository to a local directory on your c
   	<p><b>Word.js</b>: Contains a constructor, Word that depends on the Letter constructor. This is used to create an object representing the current word the user is attempting to guess. The constructor includes:</p>
   	<ul>
   		<li>An array of new Letter objects representing the letters of the underlying word.</li>
-  		<li>A function that returns a string representing the word. This calls the function on each letter object (defined in Letter.js) that displays the character or an underscore and concatenate those together.</li>
+  		<li>A function that returns a string representing the word. This calls the function on each letter object (defined in Letter.js) that displays the character or an underscore and concatenates those together.</li>
   		<li>A function that takes a character as an argument and calls the guess function on each letter object (defined in Letter.js).</li>
   	</ul>
   </li>
@@ -72,9 +72,9 @@ The first step is to clone the project repository to a local directory on your c
 <p>After you clone the repository to a local directory, change directory to the project root directory (constructor-hangman) and run the following command to install the required npm packages:</p>
 <pre>npm install</pre>
 <ul>
-	<li>Inquirer npm package (https://www.npmjs.com/package/twitter) - used to prompt users for a letter throughout the game.</li>
+	<li>inquirer npm package (https://www.npmjs.com/package/twitter) - used to prompt users for a letter throughout the game.</li>
 	<li>cli-color npm package (https://www.npmjs.com/package/cli-color) - used to add color to the game.</li>
-  	<li>Figlet npm package (https://www.npmjs.com/package/figlet) - used to convert text into ASCII art - drawings made out of text characters.</li>
+  	<li>figlet npm package (https://www.npmjs.com/package/figlet) - used to convert text into ASCII art - drawings made out of text characters.</li>
   	<li>is-letter npm package (https://www.npmjs.com/package/is-letter) - used for form valiation. This package is used to check if the value the user enters is a letter (for example, "a") or not a letter (for example, "aba").</li>
   	<li>boxen npm package (https://www.npmjs.com/package/boxen) - used to create boxes in terminal.</li>
 </ul>
@@ -93,7 +93,7 @@ $ node index.js
  |  _  | (_| | | | | (_| | | | | | | (_| | | | | | |_| | (_| | | | | | |  __/
  |_| |_|\__,_|_| |_|\__, |_| |_| |_|\__,_|_| |_|  \____|\__,_|_| |_| |_|\___|
                     |___/
-Welcome to the Hangman Game (Minnesota Edition)!
+Welcome to the Hangman Game!
 Theme is... Minnesota cities.
 ==========================================================================================================
 How to play
@@ -106,15 +106,65 @@ If correct, the letter you guessed appears in the word.
 If you correctly guess all the letters in the word before the number of guesses remaining reaches 0, you win.
 If you run out of guesses before the entire word is revealed, you lose. Game over.
 ===========================================================================================================
-
-? Are you ready to play? (Y/n)
+You can exit the game at any time by pressing Ctrl + C on your keyboard.
+===========================================================================================================
+? What is your name?
 
 </pre>
-<p>At the prompt, press <b>Y</b> to begin.</p>
+<p>At the prompt, enter your name and press <b>Enter</b>.</p>
+<p>When prompted, enter <b>Y</b> to begin playing.</p>
+<pre>Are you ready to play? (Y/n)</pre>
 
+## <a name="play-game"></a> Playing the game
+<p>When the game starts, you will be given a word and the number of letters in that word.</p>
+<p>When prompted, try to guess a letter that is in the word.</p>
+<pre>Great! Welcome, Phil. Let's begin...
+Your word contains 7 letters.
+WORD TO GUESS:
 
-## <a name="examples"></a> Examples
+? Guess a letter:
+</pre>
+<p>You start the game with 10 guesses. If your guess is incorrect, the number of guesses remaining decreases by 1.</p>
+<pre>
+You guessed: Z
+┌─────────────────────────────────┐
+│                                 │
+│   Letters already guessed:  Z   │
+│                                 │
+└─────────────────────────────────┘
+WORD TO GUESS:
 
+INCORRECT!
+You have 9 guesses left.
+=====================================================================
+</pre>
+<p>If your guess is correct, the letter is added to the word.</p>
+<pre>
+=====================================================================
+? Guess a letter: a
+You guessed: A
+┌───────────────────────────────────┐
+│                                   │
+│   Letters already guessed:  Z A   │
+│                                   │
+└───────────────────────────────────┘
+WORD TO GUESS:
+ A   A
+CORRECT!
+=====================================================================
+</pre>
+<p>If you guess all the letters in the word before the number of guesses reaches 0, you win.</p>
+<pre>
+WORD TO GUESS:
+M A N K A T O
+CORRECT!
+=====================================================================
+=====================================================================
+YOU WON! YOU'RE A TRUE MINNESOTAN!
+Wins: 1
+Losses: 0
+=====================================================================
+</pre>
 
 ## <a name="technologies-used"></a> Technologies used to build app
 
@@ -122,13 +172,15 @@ If you run out of guesses before the entire word is revealed, you lose. Game ove
   * Javascript constructor functions
 
 ## <a name="feature-enhancements"></a> Future code development
-<p>Source code will be developed over time to handle new features in the future.</p>
+<p>Source code will be developed over time to handle new features.</p>
 <p>The following is a list of potential feature enhancements:</p>
+<ol>
+  <li>Create a mySQL database and create a sign up and login system that prompts users for a username and password upon loading up the app.</li>
+  <li>When the user guesses a city correctly, add a fun fact about that city.</li>
+  <li>Expand the game to include different categories in addition to cities. For example, Minnesota landmarks, Minnesota athletes, etc.</li>
+  <li>When random word is chosen at the beginning of the game, display a hint to help the user.</li>
+</ol>
 
 ## <a name ="Issues"></a> Issues
 <p>If you find an issue while using the app or have a request, <a href="https://github.com/philipstubbs13/constructor-hangman/issues/" target="_blank">log the issue or request here</a>. These issues will be addressed in a future code update.</p>
-
-<p>Known issues</p>
-<ul>
-</ul>
 
