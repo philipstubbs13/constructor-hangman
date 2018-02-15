@@ -1,4 +1,4 @@
-# Javascript Contstructor Hangman Game
+# Javascript Constructor Hangman Game
 
 ## Table of contents
   * [Demo](#demo)
@@ -108,10 +108,10 @@ If you run out of guesses before the entire word is revealed, you lose. Game ove
 ===========================================================================================================
 You can exit the game at any time by pressing Ctrl + C on your keyboard.
 ===========================================================================================================
-? What is your name?
 
 </pre>
 <p>At the prompt, enter your name and press <b>Enter</b>.</p>
+<pre>? What is your name?</pre>
 <p>When prompted, enter <b>Y</b> to begin playing.</p>
 <pre>Are you ready to play? (Y/n)</pre>
 
@@ -122,7 +122,7 @@ You can exit the game at any time by pressing Ctrl + C on your keyboard.
 Your word contains 7 letters.
 WORD TO GUESS:
 
-? Guess a letter:
+
 </pre>
 <p>You start the game with 10 guesses. If your guess is incorrect, the number of guesses remaining decreases by 1.</p>
 <pre>
@@ -133,7 +133,7 @@ You guessed: Z
 │                                 │
 └─────────────────────────────────┘
 WORD TO GUESS:
-
+ A  A
 INCORRECT!
 You have 9 guesses left.
 =====================================================================
@@ -174,12 +174,12 @@ Losses: 0
 ## <a name="feature-enhancements"></a> Future code development
 <p>Source code will be developed over time to handle new features.</p>
 <p>The following is a list of potential feature enhancements:</p>
-<ol>
+<ul>
   <li>Create a mySQL database and create a sign up and login system that prompts users for a username and password upon loading up the app.</li>
   <li>When the user guesses a city correctly, add a fun fact about that city.</li>
   <li>Expand the game to include different categories in addition to cities. For example, Minnesota landmarks, Minnesota athletes, etc.</li>
   <li>When random word is chosen at the beginning of the game, display a hint to help the user.</li>
-</ol>
+</ul>
 
 ## <a name ="Issues"></a> Issues
 <p>If you find an issue while using the app or have a request, <a href="https://github.com/philipstubbs13/constructor-hangman/issues/" target="_blank">log the issue or request here</a>. These issues will be addressed in a future code update.</p>
