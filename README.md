@@ -17,7 +17,7 @@
 Video demo: https://www.youtube.com/watch?v=3F9VjnIJ6jI&feature=youtu.be
 
 ## <a name="about-this-project"></a> About this project
-This project is a command line version of the classic Hangman game. This game uses similar logic to the [browser-based Hangman game](https://github.com/philipstubbs13/Hangman-Game) I created, but with this game, I created the command line version using Javascript constructor functions, where each letter in the word that the user is trying to guess is its own object. For more information on how this project was constructed and put together, see [Structure of the project](#structure-of-project).
+This project is a command line version of the classic Hangman game. This game uses similar logic to the [browser-based Hangman game](https://github.com/philipstubbs13/Hangman-Game) I created, but with this game, I created a command line version using Javascript constructor functions to create letter and word objects, the inquirer npm package to prompt users to guess a letter, and Node.js to run the Javascript code from the command line. For more information on how this project was constructed and put together, see [Structure of the project](#structure-of-project).
 
 ## <a name="contribute"></a> Getting started
 To play the game from your computer and/or contribute to this project, perform the following steps:
